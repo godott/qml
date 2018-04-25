@@ -9,7 +9,7 @@ void exponentiate_general_case(pauli_term* p, double param) {
     if (ops[i] == sX) {
       printf("H %d\n", i);
     } else if (ops[i] == sY) {
-      printf("Rx %d %lf\n", pi/2.0);
+      printf("Rx %d %lf\n", i, pi/2.0);
     } else {
       continue;
     }
@@ -51,25 +51,25 @@ void exponentiate_general_case(pauli_term* p, double param) {
     if (ops[i] == sX) {
       printf("H %d\n", i);
     } else if (ops[i] == sY) {
-      printf("Rx %d %lf\n", -pi/2.0);
+      printf("Rx %d %lf\n", i, -pi/2.0);
     }
   }
 }
 
-void exponentiate(qbit q[n], pauli_term* p, double param) {
+void exponentiate(pauli_term* p, double param) {
   if (is_identity(p)) {
     printf("X 0\n");
     printf("Rz 0 %lf\n", -param * p->coeff.re*2.0);
     printf("X 0\n");
     printf("Rz 0 %lf\n", -param * p->coeff.re*2.0);
   } else {
-    exponentiate_general_case(q, p, param);
+    exponentiate_general_case(p, param);
   }
 }
 
-void exponentiate_pauli_sum(qbit q[n], pauli_sum* p, double param) {
+void exponentiate_pauli_sum(pauli_sum* p, double param) {
   int len = p->len;
   for (int i = 0; i < len; i ++) {
-    exponentiate(q, p->sum[i], param);
+    exponentiate(p->sum[i], param);
   }
 }
