@@ -7,9 +7,9 @@ void exponentiate_general_case(pauli_term* p, double param) {
   // Change to Z basis
   for (int i = 0; i < MAX_LEN; i ++) {
     if (ops[i] == sX) {
-      printf("H %d\n", i);
+      printf("H q[%d]\n", i);
     } else if (ops[i] == sY) {
-      printf("Rx %d %lf\n", i, pi/2.0);
+      printf("RX[%lf] q[%d]\n", pi/2.0, i);
     } else {
       continue;
     }
@@ -25,7 +25,7 @@ void exponentiate_general_case(pauli_term* p, double param) {
   for (int i = 1; i < MAX_LEN; i ++) {
     arr[i] = (int*)malloc(2 * sizeof(int));
     if (ops[i] != sI) {
-      printf("CNOT %d %d\n", prev_index, i);
+      printf("CNOT q[%d],q[%d]\n", prev_index, i);
       arr[i][0] = prev_index;
       arr[i][1] = i;
       highest_index = i;
@@ -35,33 +35,33 @@ void exponentiate_general_case(pauli_term* p, double param) {
     }
     prev_index = i;
   }
-  printf("Rz %d %lf\n", highest_index, 2.0 * p->coeff.re * param);
+  printf("PH[%lf] q[%d]\n", p->coeff.re * param, highest_index);
   
   // Reverse CNOT sequence, to do
   for (int i = MAX_LEN - 1; i >= 0; i --) {
     int prev_index = arr[i][0];
     int index = arr[i][1];
     if (prev_index != 0 || index != 0) {
-      printf("CNOT %d %d\n", prev_index, i);
+      printf("CNOT q[%d], q[%d]\n", prev_index, i);
     }
   }
 
   // Change back to original basis
   for (int i = 0; i < MAX_LEN; i ++) {
     if (ops[i] == sX) {
-      printf("H %d\n", i);
+      printf("H q[%d]\n", i);
     } else if (ops[i] == sY) {
-      printf("Rx %d %lf\n", i, -pi/2.0);
+      printf("RX[%lf] q[%d]\n", -pi/2.0, i);
     }
   }
 }
 
 void exponentiate(pauli_term* p, double param) {
   if (is_identity(p)) {
-    printf("X 0\n");
-    printf("Rz 0 %lf\n", -param * p->coeff.re*2.0);
-    printf("X 0\n");
-    printf("Rz 0 %lf\n", -param * p->coeff.re*2.0);
+    printf("RX[%lf] q[0]\n", pi/2);
+    printf("PH[%lf] q[0]\n", -param * p->coeff.re);
+   printf("RX[%lf] q[0]\n", pi/2);
+    printf("PH[%lf] q[0]\n", -param * p->coeff.re);
   } else {
     exponentiate_general_case(p, param);
   }
