@@ -1,5 +1,5 @@
 genqasm: qaoa.o pauli.o pauli_lib.o graph.o complex.o
-	gcc -o genqasm foo.o pauli.o pauli_lib.o graph.o complex.o
+	gcc -o genqasm qaoa.o pauli.o pauli_lib.o graph.o complex.o
 
 foo.o: qaoa.c graph.h pauli_lib.h
 	gcc -c foo.c
