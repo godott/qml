@@ -2,7 +2,7 @@ genqasm: qaoa.o pauli.o pauli_lib.o graph.o complex.o
 	gcc -o genqasm qaoa.o pauli.o pauli_lib.o graph.o complex.o
 
 foo.o: qaoa.c graph.h pauli_lib.h
-	gcc -c foo.c
+	gcc -c qaoa.c
 
 pauli.o: pauli.c pauli.h complex.h
 	gcc -c pauli.c
@@ -15,3 +15,6 @@ complex.o: complex.c complex.h
 
 graph.o: graph.c graph.h
 	gcc -c graph.c
+
+clean:
+	rm qaoa.o pauli.o pauli_lib.o graph.o complex.o
