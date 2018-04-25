@@ -9,7 +9,7 @@ void exponentiate_general_case(pauli_term* p, double param) {
     if (ops[i] == sX) {
       printf("H %d\n", i);
     } else if (ops[i] == sY) {
-      Rz(q[i], pi/2.0);//Rx
+      printf("Rx %d %lf\n", pi/2.0);
     } else {
       continue;
     }
@@ -25,7 +25,7 @@ void exponentiate_general_case(pauli_term* p, double param) {
   for (int i = 1; i < MAX_LEN; i ++) {
     arr[i] = (int*)malloc(2 * sizeof(int));
     if (ops[i] != sI) {
-      CNOT(q[prev_index], q[i]);
+      printf("CNOT %d %d\n", prev_index, i);
       arr[i][0] = prev_index;
       arr[i][1] = i;
       highest_index = i;
@@ -35,34 +35,33 @@ void exponentiate_general_case(pauli_term* p, double param) {
     }
     prev_index = i;
   }
-
-  Rz(q[highest_index], 2.0 * p->coeff.re * param);
+  printf("Rz %d %lf\n", highest_index, 2.0 * p->coeff.re * param);
   
   // Reverse CNOT sequence, to do
   for (int i = MAX_LEN - 1; i >= 0; i --) {
     int prev_index = arr[i][0];
     int index = arr[i][1];
     if (prev_index != 0 || index != 0) {
-      CNOT(q[prev_index], q[i]);
+      printf("CNOT %d %d\n", prev_index, i);
     }
   }
 
   // Change back to original basis
   for (int i = 0; i < MAX_LEN; i ++) {
     if (ops[i] == sX) {
-      H(q[i]);
+      printf("H %d\n", i);
     } else if (ops[i] == sY) {
-      Rz(q[i], -pi / 2.0);// Rx
+      printf("Rx %d %lf\n", -pi/2.0);
     }
   }
 }
 
 void exponentiate(qbit q[n], pauli_term* p, double param) {
   if (is_identity(p)) {
-    X(q[0]);
-    Rz(q[0], -param * p->coeff.re*2.0);
-    X(q[0]);
-    Rz(q[0], -param * p->coeff.re*2.0);
+    printf("X 0\n");
+    printf("Rz 0 %lf\n", -param * p->coeff.re*2.0);
+    printf("X 0\n");
+    printf("Rz 0 %lf\n", -param * p->coeff.re*2.0);
   } else {
     exponentiate_general_case(q, p, param);
   }
