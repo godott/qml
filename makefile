@@ -17,4 +17,4 @@ graph.o: graph.c graph.h
 	gcc -c graph.c
 
 clean:
-	$(RM) genqasm *.gch *.o
+	$(RM) genqasm *.o
