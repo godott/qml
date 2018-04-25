@@ -1,13 +1,12 @@
 #include "pauli.h"
-#define MAX_LEN 4
 #include <stdio.h>
 
 pauli_term* new_pauli_term(int index, complex coeff, pauli op) {
   pauli_term* t = (pauli_term*)malloc(sizeof(pauli_term));
   //t->len = 1;
   t->coeff = coeff;
-  t->ops = (pauli*)malloc(MAX_LEN * sizeof(pauli));
-  for (int i = 0; i < MAX_LEN; i ++) {
+  t->ops = (pauli*)malloc(n * sizeof(pauli));
+  for (int i = 0; i < n; i ++) {
     if (i == index) {
       t->ops[i] = op;
     } else {
@@ -44,7 +43,7 @@ pauli_term* pauli_term_prod(pauli_term* a, pauli_term* b) {
   
   int len = a->len > b->len ? a->len : b->len;*/
   pauli_term* p = new_pauli_term(0, new_complex(1,0), sI);
-  for (int i = 0; i < MAX_LEN; i ++) {
+  for (int i = 0; i < n; i ++) {
     pauli A = a->ops[i];
     pauli B = b->ops[i];
     if (A == sI && B == sI) {
@@ -85,7 +84,7 @@ pauli_term* pauli_term_prod(pauli_term* a, pauli_term* b) {
 }
 
 int is_identity(pauli_term* p) {
-    for (int i = 0; i < MAX_LEN; i ++) {
+    for (int i = 0; i < n; i ++) {
       if (p->ops[i] != sI) {
         return (p->coeff.re == 1 && p->coeff.im == 0);
       }
