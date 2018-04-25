@@ -2,7 +2,7 @@
 #include "graph.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define n 4
+#include "const.h"
 
 int main() {
   printf("BEGIN\n");

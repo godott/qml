@@ -1,4 +1,5 @@
 #include "complex.h"
+#include "const.h"
 
 typedef enum {sX, sY, sZ, sI} pauli;
 
