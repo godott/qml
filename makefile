@@ -17,4 +17,4 @@ graph.o: graph.c graph.h
 	gcc -c graph.c
 
 clean:
-	$(RM) genqasm *.o
+	rm qaoa.o pauli.o pauli_lib.o graph.o complex.o genqasm
