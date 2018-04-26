@@ -1,11 +1,22 @@
+import os
 import subprocess
-import numpy
+import numpy as np
 
-n = 10 # number of qubits
+n = 17 # number of qubits
 l = 30 # number of parameters
 
-theta = np.linspace(0, 2*pi, l)
+thetas = np.random.uniform(low=0, high=2*np.pi, size=(l,))
 
-subprocess.call(['./genqasm'] + [str(ang) for ang in theta])
+i = 0
+while True:
+  num = len(data)
+  for bits in data:
+    cmd_genqasm = "make clean; make; ./genqasm " + " -t " + " ".join(['{:.8f}'.format(x) for x in thetas]) + " > qasm_"+str(i) + " -z " + 
+    ret = os.system(cmd_genqasm)
+  
+    cmd_runqasm = "./runqasm.sh qasm_"+str(i)
+    ret = os.system(cmd_runqasm)
+    i += 1
+
 
 
