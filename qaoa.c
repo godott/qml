@@ -20,10 +20,11 @@ int main() {
   for (int i = 0; i < n; i ++) {
     for (int j = 0; j < n; j ++) {
       if (G->adjacency_matrix[i][j]) { 
-        pauli_term* t_i = new_pauli_term(i, new_complex(-1,0), sZ);
-        pauli_term* t_j = new_pauli_term(j, new_complex(-1,0), sZ);
-        pauli_term* I = new_pauli_term(0, new_complex(1,0), sI);
+        pauli_term* t_i = new_pauli_term(i, new_complex(1,0), sZ);
+        pauli_term* t_j = new_pauli_term(j, new_complex(1,0), sZ);
         pauli_term* t = pauli_term_prod(t_i, t_j);
+        pauli_term_prod_const(&t, -1.0);
+        pauli_term* I = new_pauli_term(0, new_complex(1,0), sI);
         H_cost = pauli_term_add_to_sum(H_cost, I);
         H_cost = pauli_term_add_to_sum(H_cost, t);
       }
