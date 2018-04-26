@@ -40,7 +40,7 @@ int main() {
 
   int num_param = 2;
   double gammas[] = {0.0, 0.5};
-  double betas[] = {0.75, 1.25};
+  double betas[] = {0.75, 1.0};
   for (int i = 0; i < num_param; i ++) {
     exponentiate_pauli_sum(H_cost, gammas[i]);
     exponentiate_pauli_sum(H_ref, betas[i]);

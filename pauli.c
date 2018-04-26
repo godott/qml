@@ -86,10 +86,10 @@ pauli_term* pauli_term_prod(pauli_term* a, pauli_term* b) {
 int is_identity(pauli_term* p) {
     for (int i = 0; i < n; i ++) {
       if (p->ops[i] != sI) {
-        return (p->coeff.re == 1 && p->coeff.im == 0);
+        return 0;
       }
     }
-    return 1;
+    return p->coeff.re != 0 || p->coeff.im != 0;
 }
 
 void pauli_term_prod_const(pauli_term** p_ref, double c) {
@@ -99,8 +99,20 @@ void pauli_term_prod_const(pauli_term** p_ref, double c) {
 
 pauli_sum* pauli_term_add_to_sum(pauli_sum* s, pauli_term* t) {
   int len = s->len;
-  s->sum[len] = t;
-  s->len ++;
+  int flag = 1;
+  if (is_identity(t)) {
+    for (int i = 0; i < len; i ++) {
+      if (is_identity(s->sum[i])) {
+        s->sum[i]->coeff = add(s->sum[i]->coeff, t->coeff);
+        flag = 0;
+        break;
+      }
+    }
+  }
+  if (flag) {
+    s->sum[len] = t;
+    s->len ++;
+  }
   return s;
 }
 
