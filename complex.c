@@ -44,12 +44,3 @@ void disp_complex(complex a) {
     printf("%.2f-%.2fi\n", a.re, -a.im);
   }
 }
-/*
-int main() {
-  complex a = new_complex(1,1);
-  complex b = new_complex(0.3, 0.4);
-  disp_complex(a);
-  disp_complex(b);
-  complex c = quo(a,b);
-  disp_complex(c);
-}*/

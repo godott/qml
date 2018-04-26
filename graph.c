@@ -19,7 +19,6 @@ Graph* new_graph(int num_of_vertices) {
 
 void addEdge(Graph* G, int u, int v) {
   G->adjacency_matrix[u][v] = 1;
-  //G->adjacency_matrix[v][u] = 1;
   G->num_of_edges ++;
 }
 
